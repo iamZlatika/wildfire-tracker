@@ -1,14 +1,23 @@
 import GoogleMapReact from 'google-map-react'
 import LocationMarker from './LocationMarker'
 
-const Map = ({ center, zoom }) => {
+const Map = ({ eventData, center, zoom }) => {
+  const markers = eventData.map(ev => {
+    if (ev.categories[0].id === 8) {
+      return   <LocationMarker 
+      lat={ev.geometries[0].coordinates[1]} 
+      lng={ev.geometries[0].coordinates[0]} />
+    }
+    return null
+  })
+
   return (
     <div className="map">
       <GoogleMapReact
         bootstrapURLKeys={{ key: 'AIzaSyBm9v9s5tnSIHp4k3g_sd7hEO1Vb7dY3Vw' }}
         defaultCenter={center}
         defaultZoom={zoom}>
-          <LocationMarker lat={center.lat} lng={center.lng}/>
+      {markers}
       </GoogleMapReact>
     </div>
   )
